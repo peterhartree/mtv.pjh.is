@@ -1,0 +1,28 @@
+# Blog Template URL Routing
+
+RewriteEngine On
+
+# Force HTTPS (uncomment if needed)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Don't rewrite actual files and directories
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Archives page
+RewriteRule ^archives/?$ archives.php [L]
+
+# About page
+RewriteRule ^about/?$ about.php [L]
+
+# Tag pages
+RewriteRule ^tagged/(.+)/?$ tagged.php?tag=$1 [L]
+
+# Single post pages (catch-all for slugs)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z0-9-]+)/?$ post.php?slug=$1 [L]
+
+# Error document
+ErrorDocument 404 /post.php?slug=not-found
